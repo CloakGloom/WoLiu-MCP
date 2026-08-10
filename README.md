@@ -52,6 +52,61 @@ configs = get_all_mcp_configs()
 python -m woliumcp /path/to/WoLiu-AI-Agent
 ```
 
+## 集成到 WoLiu-AI-Agent
+
+WoLiu-MCP 是 WoLiu-AI-Agent 的服务管理核心。当你克隆主项目后：
+
+### 1. 安装
+
+```bash
+cd WoLiu-AI-Agent
+pip install woliumcp
+```
+
+### 2. 工作原理
+
+主项目 `server/app.py` 启动时会自动调用 WoLiu-MCP：
+
+```
+server/app.py
+    ├── 扫描 agent/mcp_modules/ 下的所有模块
+    ├── 每个模块的 module.py 由 WoLiu-MCP 框架自动发现
+    ├── 注册各模块提供的工具 Schema（供 LLM 调用）
+    ├── 前端设置面板 → 显示模块开关/启停按钮
+    ├── WebSocket handler → 接收前端点"开启"消息
+    └── 子进程/HTTP 调用 → 启动各服务（ComfyUI、Presenton 等）
+```
+
+- **内置模块**（personality 等）直接 `import` 进 Agent 进程
+- **外部服务模块**（ComfyUI、Presenton、JadeAI 等）通过子进程启动服务，Agent 通过 HTTP API 或 MCP 协议与它们通信
+
+### 3. 添加新模块
+
+在 `agent/mcp_modules/` 下创建目录，写入 `module.py`，参考上面的「自定义模块」示例。放到目录中即被自动发现，主项目无需任何额外配置。
+
+### 4. MCP Server 集成
+
+部分模块（spine2d、agent-browser）对外暴露标准 MCP Server：
+
+```json
+{
+    "mcpServers": {
+        "spine2d": {
+            "command": "python",
+            "args": ["-m", "spine2d_mcp.server"],
+            "cwd": "./side-projects/spine2d-animation-mcp-main"
+        },
+        "agent-browser": {
+            "command": "npx",
+            "args": ["@playwright/mcp", "--headless"],
+            "cwd": "."
+        }
+    }
+}
+```
+
+主项目的 Agent 内核通过 `agent/mcp_client/` 连接这些 MCP Server，获取工具列表并调用。
+
 ## 内置模块
 
 | 模块 | ID | 类型 | MCP |
