@@ -10,6 +10,9 @@ WoLiu-AI-Agent 的 MCP 服务模块插件系统。
 
 面向 **WoLiu-AI-Agent** 项目，但任何支持 MCP 协议的智能体客户端均可直接使用。
 
+## 接入我流展示
+<img width="2549" height="1403" alt="image" src="https://github.com/user-attachments/assets/0a3dee5c-c352-4975-8e27-245eb635f3e4" />
+
 ## 安装
 
 ```bash
