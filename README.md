@@ -117,6 +117,28 @@ WoLiu-MCP 模块通过标准 MCP 协议暴露。任何支持 MCP 的客户端（
     }
 }
 ```
+## 集成项目
+语音合成：
+ChatTTS：
+https://github.com/2noise/ChatTTS
+Confucius4-TTS：
+https://github.com/netease-youdao/Confucius4-TTS/blob/main/README.zh.md
+
+简历制作：
+JadeAI-0.4.1：
+https://github.com/LingyiChen-AI/JadeAI
+
+PPT制作：
+presenton-electron-v0.9.3-beta
+
+Live2D动画：
+https://github.com/ampersante/spine2d-animation-mcp
+
+目标检测：
+https://github.com/xzcGit/autolabel-dock
+
+ComfyUI：
+https://github.com/Comfy-Org/ComfyUI
 
 ## 许可证
 
